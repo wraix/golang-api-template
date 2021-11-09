@@ -18,17 +18,23 @@ jobs:
 
       - uses: actions/checkout@v2
 
-      - name: Setup reviewdog
-        uses: reviewdog/action-setup@v1
-        with:
-          reviewdog_version: v0.13.0
+      - run: gofmt -w -s .
 
-      - name: Run reviewdog (gofmt)
-        continue-on-error: true
-        env:
-          REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gofmt -s -d . | reviewdog -name="gofmt" -f=diff -f.diff.strip=0 -reporter=github-pr-review
+      #- name: Setup reviewdog
+      #  uses: reviewdog/action-setup@v1
+      #  with:
+      #    reviewdog_version: v0.13.0
+
+      - uses: reviewdog/action-suggester@v1
+        with:
+          tool_name: gofmt
+
+      #- name: Run reviewdog (gofmt)
+      #  continue-on-error: true
+    #    env:
+    #      REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    #    run: |
+    #      gofmt -s -d . | reviewdog -name="gofmt" -f=diff -f.diff.strip=0 -reporter=github-pr-review
 
       #- name: Run reviewdog
       #  env:
