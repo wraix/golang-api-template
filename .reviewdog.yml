@@ -1,4 +1,6 @@
+# reviewdog.yml
+
 runner:
   govet:
-    cmd: go vet .
+    cmd: go vet $(go list ./... | grep -v /vendor/)
     format: govet
