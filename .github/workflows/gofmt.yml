@@ -1,9 +1,9 @@
-name: Check gofmt
+name: Format the code
 
 on: [pull_request]
 
 jobs:
-  gofmt:
+  format:
     strategy:
       matrix:
         go-version:
@@ -12,11 +12,18 @@ jobs:
           - ubuntu-18.04
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/setup-go@v2
+      - name: Setup Go
+        uses: actions/setup-go@v2
         with:
           go-version: ${{ matrix.go-version }}
-      - uses: actions/checkout@v2
-      - run: gofmt -w -s .
-      - uses: reviewdog/action-suggester@v1
+
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Run gofmt
+        run: gofmt -w -s .
+
+      - name: Run reviewdog (github-pr-suggest)
+        uses: reviewdog/action-suggester@v1
         with:
           tool_name: gofmt
