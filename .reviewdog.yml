@@ -8,7 +8,6 @@ runner:
     level: warning
   govet:
     cmd: go vet $(go list ./... | grep -v /vendor/) 2>&1
-    format: govet
     errorformat:
       - "vet: %f:%l:%c: %m"
     level: warning
