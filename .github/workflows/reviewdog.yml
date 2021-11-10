@@ -26,7 +26,10 @@ jobs:
       - name: Run reviewdog (github-pr-suggest)
         uses: reviewdog/action-suggester@v1
         with:
+          level: warning
+          fail_on_error: true
           tool_name: gofmt
+          filter_mode: diff_context
 
   govet:
     name: runner / govet
@@ -70,4 +73,4 @@ jobs:
           # Report all results.
           filter_mode: nofilter
           # Exit with 1 when it find at least one finding.
-          fail_on_error: true
+          fail_on_error: false
