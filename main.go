@@ -5,7 +5,5 @@ import (
 )
 
 func main() {
-v := "string"
-return
 	cmd.Execute()
 }
