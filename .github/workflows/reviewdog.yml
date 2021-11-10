@@ -36,6 +36,7 @@ jobs:
           - 1.17.x
         os:
           - ubuntu-latest
+    runs-on: ${{ matrix.os }}
     steps:
 
       - name: Checkout code
@@ -58,6 +59,7 @@ jobs:
           - 1.17.x
         os:
           - ubuntu-latest
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
       - uses: reviewdog/action-staticcheck@v1
