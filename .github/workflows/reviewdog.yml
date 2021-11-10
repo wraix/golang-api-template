@@ -47,6 +47,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Check for go.mod
+        run: test -f go.mod
+
       - uses: reviewdog/action-setup@v1
         with:
           reviewdog_version: v0.13.0 # Optional. [latest,nightly,v.X.Y.Z]
