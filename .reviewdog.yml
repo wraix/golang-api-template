@@ -1,13 +1,8 @@
 # reviewdog.yml
 
 runner:
-  golint:
-    cmd: golint ./...
-    errorformat:
-      - "%f:%l:%c: %m"
-    level: warning
   govet:
     cmd: go vet $(go list ./... | grep -v /vendor/) 2>&1
     errorformat:
       - "vet: %f:%l:%c: %m"
-    level: warning
+    level: warning  
