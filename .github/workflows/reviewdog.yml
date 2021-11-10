@@ -32,6 +32,7 @@ jobs:
           filter_mode: diff_context
 
   govet:
+    # needs: gofmt
     name: runner / govet
     strategy:
       matrix:
