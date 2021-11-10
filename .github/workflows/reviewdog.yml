@@ -32,7 +32,8 @@ jobs:
           filter_mode: diff_context
 
   govet:
-    # needs: gofmt
+    # No need to run govet if gofmt fails...
+    needs: gofmt
     name: runner / govet
     strategy:
       matrix:
