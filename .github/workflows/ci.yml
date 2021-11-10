@@ -60,6 +60,7 @@ jobs:
           go vet $(go list ./... | grep -v /vendor/) 2>&1 | reviewdog -efm="vet: %f:%l:%c: %m" -level=error -fail-on-error -reporter=github-pr-review
 
   staticcheck:
+    needs: govet
     name: runner / staticcheck
     strategy:
       matrix:
