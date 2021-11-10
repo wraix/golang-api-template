@@ -3,12 +3,13 @@ on: [pull_request]
 jobs:
 
   gofmt:
+    name: runner / gofmt
     strategy:
       matrix:
         go-version:
           - 1.17.x
         os:
-          - ubuntu-18.04
+          - ubuntu-latest
     runs-on: ${{ matrix.os }}
     steps:
       - name: Setup Go
@@ -27,9 +28,14 @@ jobs:
         with:
           tool_name: gofmt
 
-  reviewdog:
-    name: reviewdog
-    runs-on: ubuntu-latest
+  govet:
+    name: runner / govet
+    strategy:
+      matrix:
+        go-version:
+          - 1.17.x
+        os:
+          - ubuntu-latest
     steps:
 
       - name: Checkout code
@@ -38,8 +44,28 @@ jobs:
       - uses: reviewdog/action-setup@v1
         with:
           reviewdog_version: latest # Optional. [latest,nightly,v.X.Y.Z]
-      - name: Run reviewdog
+      - name: Run reviewdog govet
         env:
           REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           reviewdog -reporter=github-pr-check -runners=govet -fail-on-error
+
+  staticcheck:
+    name: runner / staticcheck
+    strategy:
+      matrix:
+        go-version:
+          - 1.17.x
+        os:
+          - ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: reviewdog/action-staticcheck@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          # Change reviewdog reporter if you need [github-pr-check,github-check,github-pr-review].
+          reporter: github-pr-review
+          # Report all results.
+          filter_mode: nofilter
+          # Exit with 1 when it find at least one finding.
+          fail_on_error: true
